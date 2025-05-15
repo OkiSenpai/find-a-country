@@ -10,13 +10,15 @@
 
 
 
-    
+        #h1{
+            margin: 0;
+        }
 
         #carte {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 150px;
+           
         }
         .hearts {
             display: flex;
@@ -39,7 +41,8 @@
     </div>
 
     <div id="carte">
-        <h1>Carte interactive de l'Europe</h1><br>
+        <h1 id="h1">Carte interactive de l'Europe</h1><br>
+        <h3 id="h3"></h3>
         <svg baseprofile="tiny" fill="#ececec" height="684" stroke="black" stroke-linecap="round"
             stroke-linejoin="round" stroke-width=".1" version="1.2" viewbox="0 0 1000 684" width="1000"
             xmlns="http://www.w3.org/2000/svg">
@@ -229,6 +232,7 @@
     </div>
 
     <script>
+
         let attempts = 0;
         const maxAttempts = 3;
         const countries = ["AL", "AD", "AM", "AT", "BE", "BG", "BA", "BY", "CH", "CZ", "DE", "DK", "EE", "FI", "FR", "GE", "GR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MD", "ME", "MK", "NL", "NO", "PL", "PT", "RO", "RS", "SE", "SI", "SK", "TR", "UA", "XK"];
@@ -236,30 +240,32 @@
         const totalCountries = countries.length;
         console.log("Number of countries: " + totalCountries);
     
-        // Pick a random country
         const randomCountryCode = countries[Math.floor(Math.random() * countries.length)];
         const targetCountry = document.getElementById(randomCountryCode);
         const countryName = targetCountry.getAttribute("name");
     
-        alert("Welcome to the game Guess the Country!");
-        alert("Click on: " + countryName);
+       
+        const h1 = document.getElementById("h1");
+        const h3 = document.getElementById("h3");
+        h1.innerHTML = `Click on the ${countryName}`;
     
-        // Add click event to all countries
+
         countries.forEach(code => {
             const countryElement = document.getElementById(code);
             countryElement.addEventListener("click", function () {
                 if (code === randomCountryCode) {
                     countryElement.style.fill = "green";
-                    alert("Well done! You guessed " + countryName + "!");
+                    h1.innerHTML ="Well done! You guessed " + countryName + "!";
+                    h3.innerHTML = "";
                 } else {
                     attempts++;
                     loseHeart();
                     countryElement.style.fill = "lightgray";
                     if (attempts >= maxAttempts) {
                         targetCountry.style.fill = "red";
-                        alert("You failed! The correct answer was: " + countryName);
+                        h1.innerHTML ="You failed! The correct answer was: " + countryName;
                     } else {
-                        alert("Wrong! Try again.");
+                        h3.innerHTML ="Wrong! Try again.";
                     }
                 }
             });
@@ -278,6 +284,8 @@
                 heart3.style.display = "none";
             }
         }
+
+
     </script>
     
 </body>
